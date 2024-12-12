@@ -17,15 +17,20 @@ def analyze_graph(G: nx.Graph, cliques: bool = True):
         # print("Graph is not connected")
     
     if cliques:
-        cliques = list(nx.find_cliques(G))
-        print(f"{len(cliques)} cliques are present in the Graph")
-        cliques.sort(key=len, reverse=True)
+        # cliques = list(nx.find_cliques(G))
+        # print(f"{len(cliques)} cliques are present in the Graph")
+        # cliques.sort(key=len, reverse=True)
         
-        print("\n5 Largest Cliques:")
-        for i, clique in enumerate(cliques[:5], 1):
-            print(f"\tClique {i}: Size={len(clique)}, Nodes={clique}")
+        # print("\n5 Largest Cliques:")
+        # for i, clique in enumerate(cliques[:5], 1):
+        #     print(f"\tClique {i}: Size={len(clique)}, Nodes={clique}")
 
-        return cliques[0]
+        # return cliques[0]
+        max_clique = set(nx.max_weight_clique(G, weight=None)[0])
+        print(f"Maximum clique: {max_clique}")
+        return max_clique
+    
+    return None
 
     return None
     # print("Cliques in graph:")

@@ -1,4 +1,4 @@
 temp/
 venv/
 tmp.ipynb
-graphs/
+**/__pycache__/
