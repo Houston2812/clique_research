@@ -66,36 +66,21 @@ def visualize_graph_customized_metrics(G: nx.Graph, title: str="Graph Visualizat
                    layout: str = 'spring',
                    dims: tuple = (5, 5),
                    save: bool = False):
-    """
-    Visualize a graph with legacy metrics that scale based on plot dimensions.
     
-    Args:
-        G (nx.Graph): NetworkX graph object to visualize
-        title (str): Title of the visualization
-        color (bool): Whether to color nodes based on clique membership
-        node_size (int): Size of nodes in the visualization
-        font_size (int): Size of node labels
-        layout (str): Layout algorithm to use ('spring', 'circular', 'random', 'shell')
-        dims (tuple): Figure dimensions as (width, height)
-        save (bool): Whether to save the visualization to a file
-    """
     # Create figure and calculate the scaled font size based on dimensions
     fig = plt.figure(figsize=dims)
     
-    # Calculate a scaled font size based on the plot dimensions
-    # We use the geometric mean of width and height to account for both dimensions
-    # The multiplier (0.8) can be adjusted to change the relative size
+   
     base_scale = (dims[0] * dims[1]) ** 0.5  # geometric mean of width and height
     scaled_font_size = base_scale * 1.5
     
     scaled_pad = None
-    # Calculate scaled padding based on dimensions
     if dims[0] >= 20 or dims[1] >= 20:
-        scaled_pad = base_scale * 0.04
+        scaled_pad = base_scale * 0.04  # 4% of the base scale
     elif dims[0] >= 10 or dims[1] >= 10:
-        scaled_pad = base_scale * 0.12
+        scaled_pad = base_scale * 0.12  # 12% of the base scale
     else:
-        scaled_pad = base_scale * 0.2  # 10% of the base scale
+        scaled_pad = base_scale * 0.2  # 20% of the base scale
     
     layout_funcs: dict = {
         'spring': nx.spring_layout,

@@ -33,30 +33,13 @@ def generate_multiple_cliques(sizes: list, connections: int = 0) -> nx.Graph:
     return G
 
 def generate_random_graph_config( min_cliques: int = 3, max_cliques: int = 10, min_nodes_per_clique: int = 1, max_nodes_per_clique: int = 100 ) -> Tuple[List[int], int, str]:
-    """
-    Generate a random list and a target number within [0, sum(list)].
-    
-    Args:
-        min_size: Minimum length of the list
-        max_size: Maximum length of the list
-        min_value: Minimum value for list elements
-        max_value: Maximum value for list elements
-    """
-    
     size = random.randint(min_cliques, max_cliques)
     cliques = [random.randint(min_nodes_per_clique, max_nodes_per_clique) for _ in range(size)]
-    
-    # total = sum(cliques)
-    # connections = random.randint(0, total)
     
     filename = f"multiple_clique_graph_{'_'.join(map(str, cliques))}.json"
     return cliques, filename
 
 def interclique_connections_calculator(clique_sizes: list, style: str = "") -> int:
-    # num_edges = G.number_of_edges()
-    # num_nodes = G.number_of_nodes()
-
-
     num_nodes = sum(clique_sizes)
     possible_num_edges = math.ceil((num_nodes * (num_nodes - 1)) / 2)
     current_num_edges = 0

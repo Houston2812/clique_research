@@ -7,14 +7,13 @@ from .utils import timer
 
 class TabuCliqueFinder:
     def __init__(self, graph: nx.Graph, tabu_tenure: int = 10, max_iterations: int = 100):
-        
         self.graph = graph
         self.tabu_tenure = tabu_tenure
         self.max_iterations = max_iterations
-        self.tabu_list = {}  # Dictionary storing tabu moves with their expiration time
+        # Dictionary storing tabu moves with their expiration time
+        self.tabu_list = {}  
         
     def is_clique(self, vertices: Set[int]) -> bool:
-      
         # Use NetworkX's subgraph method to check if vertices form a clique
         if len(vertices) <= 1:
             return True
@@ -23,14 +22,10 @@ class TabuCliqueFinder:
         return subgraph.number_of_edges() == (n * (n - 1)) // 2
     
     def get_neighbors(self, current_solution: Set[int]) -> list[Set[int]]:
-       
         neighbors = []
-        
-        # Try adding each vertex that's connected to all current vertices
         potential_additions = set(self.graph.nodes()) - current_solution
         
         for vertex in potential_additions:
-            # Use NetworkX's neighbors function to check connectivity
             if all(vertex in self.graph.neighbors(v) for v in current_solution):
                 new_solution = current_solution | {vertex}
                 neighbors.append(new_solution)
@@ -38,13 +33,13 @@ class TabuCliqueFinder:
         # Try removing one vertex at a time
         for vertex in current_solution:
             new_solution = current_solution - {vertex}
-            if len(new_solution) > 0:  # Don't allow empty solutions
+            # Don't allow empty solutions
+            if len(new_solution) > 0:  
                 neighbors.append(new_solution)
                 
         return neighbors
     
     def is_tabu(self, move: Set[int], iteration: int) -> bool:
-       
         move_key = frozenset(move)
         return move_key in self.tabu_list and self.tabu_list[move_key] > iteration
     
@@ -52,7 +47,6 @@ class TabuCliqueFinder:
     def find_maximum_clique(self) -> Set[int]:
         
         # Start with a random vertex as initial solution
-      
         current_solution = {random.choice(list(self.graph.nodes()))}
         best_solution = current_solution.copy()
         

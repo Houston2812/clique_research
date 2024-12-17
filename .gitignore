@@ -2,3 +2,6 @@ temp/
 venv/
 tmp.ipynb
 **/__pycache__/
+graphs/temp/
+graphs/research-old/
+graphs/research
